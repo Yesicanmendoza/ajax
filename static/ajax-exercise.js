@@ -57,8 +57,31 @@ function orderMelons(evt) {
     }
    })
    .then(response =>  response.json())
-   .then(jsonData => console.log(jsonData))
-       
+   .then(jsonData => {
+    document.querySelector('#order-status').innerHTML = jsonData.msg;
+    
+    if (jsonData.code === "ERROR"){
+      document.querySelector('#order-status').classList.add("order-error");
+    }
+   }); 
 };
 
 document.querySelector('#order-form').addEventListener('submit', orderMelons);
+
+
+//FURTHER STUDY
+function getDogImage(evt){
+  
+  const url = "https://dog.ceo/api/breeds/image/random";
+  fetch(url)
+    .then(response => response.json())
+    .then(jsonData=> {
+        const imgUrl = jsonData.message;
+        document.querySelector('#dog-image')
+            .insertAdjacentHTML(
+      "beforeend", `<div><img src=${imgUrl}></div>`); 
+    });
+
+}
+
+document.querySelector('#get-dog-image').addEventListener('click', getDogImage);
